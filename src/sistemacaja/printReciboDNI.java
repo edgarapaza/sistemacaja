@@ -43,7 +43,7 @@ public class printReciboDNI {
         
         //JOptionPane.showMessageDialog(null, archivo);
         //String archivo = "/home/edgar/NetBeansProjects/SistemaSolicitudes/src/sistemasolicitudes/reportEscritura.jasper";
-        //String archivo = "C:/Users/Planificacion/Documents/NetBeansProjects/sistemacaja2/src/sistemacaja/reporteDNI.jasper";
+        //String archivo = "C:\\Users\\Jhonnel\\Documents\\NetBeansProjects\\sistemacaja\\src\\sistemacaja\\reporteDNI.jasper";
         
         System.out.println("Cargando desde: " + archivo);
         if(archivo == null){
@@ -62,7 +62,7 @@ public class printReciboDNI {
     //este es el parámetro, se pueden agregar más parámetros
     //basta con poner mas parametro.put
     Map parametro= new HashMap();
-    parametro.put("numeroRecibo", numeroRecibo);
+    parametro.put("numerorecibo", numeroRecibo);
     //Reporte diseñado y complidado en iReport
     JasperPrint jasperPrint= JasperFillManager.fillReport(masterReport,parametro,conn);
     //Se lanza el View del Jasper, no termina ejecucion del Jasper al salir de la aplicacion

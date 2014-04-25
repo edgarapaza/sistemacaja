@@ -77,21 +77,26 @@ public class frmMenu extends javax.swing.JFrame {
 
         btnAnularRecibo.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         btnAnularRecibo.setText("ANULAR RECIBOS");
+        btnAnularRecibo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularReciboActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAnularRecibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 440, 270, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReciboSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReciboSolicitudesActionPerformed
-        dialogRecSolicitud solic = new dialogRecSolicitud(this, true);
+        dialogRecSolicitud solic = new dialogRecSolicitud(this, false);
         solic.setVisible(true);
         
         
     }//GEN-LAST:event_btnReciboSolicitudesActionPerformed
 
     private void btnRecivosDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecivosDNIActionPerformed
-       dialogRecDNI solic = new dialogRecDNI(this, true);
-        solic.setVisible(true);
+       dialogRecDNI solic = new dialogRecDNI(this, false);
+       solic.setVisible(true);
     }//GEN-LAST:event_btnRecivosDNIActionPerformed
 
     private void btnReporteDiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteDiarioActionPerformed
@@ -104,6 +109,11 @@ public class frmMenu extends javax.swing.JFrame {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnReporteDiarioActionPerformed
+
+    private void btnAnularReciboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularReciboActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnAnularReciboActionPerformed
 
     /**
      * @param args the command line arguments

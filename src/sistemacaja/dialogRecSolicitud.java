@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package sistemacaja;
 
@@ -14,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class dialogRecSolicitud extends javax.swing.JDialog {
+public final class dialogRecSolicitud extends javax.swing.JDialog {
     int solic, esc;
     int numeroRecibo =0, nextNumero=0;
     String costo;
@@ -121,6 +116,82 @@ public class dialogRecSolicitud extends javax.swing.JDialog {
         
         this.btnBuscarSolicitud.setEnabled(true);
         this.btnImprimir.setEnabled(true);
+    }
+    
+    public void limpiar(){
+        this.txtNumSolicitud.setText("");
+        this.txtNombreUsuario.setText("");
+        this.txtOtros.setText("");
+        this.txtEfectivo.setText("");
+        this.txtTotal.setText("");
+        this.lbCambia.setText("");
+        this.lblcodUsu.setText("");
+
+        this.chkBusqueda.setSelected(false);
+        this.chkCalificacion.setSelected(false);
+        this.chkTestimonio.setSelected(false);
+        this.chkCopiaSimple.setSelected(false);
+        this.chkCopiaCertificada.setSelected(false);
+        this.chkCCPartidas.setSelected(false);
+        this.chkConstancia.setSelected(false);
+        this.chkExhibicion.setSelected(false);
+        this.chkFotocopias.setSelected(false);
+        this.chkTramiteAdministrativo.setSelected(false);
+        this.chkRegularizacionEscritura.setSelected(false); 
+        this.chkTramiteRegistrosPublicos.setSelected(false);
+        this.chkAnotacionMarginal.setSelected(false);
+        this.chkPeritaje.setSelected(false);
+        this.chkOtros.setSelected(false);
+        
+        this.txtCantidadBusqueda.setText("0");
+        this.txtCantidadCalificacion.setText("0");
+        this.txtCantidadTestimonio.setText("0");
+        this.txtCantidadCopiaSimple.setText("0");
+        this.txtCantidadCopiaCertificada.setText("0");
+        this.txtCantidadCCPartidas.setText("0");
+        this.txtCantidadConstancia.setText("0");
+        this.txtCantidadExhibicion.setText("0");
+        this.txtCantidadFotocopias.setText("0");
+        this.txtCantidadTramiteAdministrativo.setText("0");
+        this.txtCantidadRegularizacionEscritura.setText("0"); 
+        this.txtCantidadTramiteRegistrosPublicos.setText("0");
+        this.txtCantidadAnotacionMarginal.setText("0");
+        this.txtCantidadPeritaje.setText("0");
+        this.txtCantidadOtros.setText("0");
+        
+                this.txtPrecioUnitarioBusqueda.setText("0.0");
+        this.txtPrecioUnitarioCalificacion.setText("0.0");
+        this.txtPrecioUnitarioTestimonio.setText("0.0");
+        this.txtPrecioUnitarioCopiaSimple.setText("0.0");
+        this.txtPrecioUnitarioCopiaCertificada.setText("0.0");
+        this.txtPrecioUnitarioCCPartidas.setText("0.0");
+        this.txtPrecioUnitarioConstancia.setText("0.0");
+        this.txtPrecioUnitarioExhibicion.setText("0.0");
+        this.txtPrecioUnitarioFotocopias.setText("0.0");
+        this.txtPrecioUnitarioTramiteAdministrativo.setText("0.0");
+        this.txtPrecioUnitarioRegularizacionEscritura.setText("0.0"); 
+        this.txtPrecioUnitarioTramiteRegistrosPublicos.setText("0.0");
+        this.txtPrecioUnitarioAnotacionMarginal.setText("0.0");
+        this.txtPrecioUnitarioPeritaje.setText("0.0");
+        this.txtPrecioUnitarioOtros.setText("0.0");
+        
+        this.txtTotalBusqueda.setText("0.0");
+        this.txtTotalCalificacion.setText("0.0");
+        this.txtTotalTestimonio.setText("0.0");
+        this.txtTotalCopiaSimple.setText("0.0");
+        this.txtTotalCopiaCertificada.setText("0.0");
+        this.txtTotalCCPartidas.setText("0.0");
+        this.txtTotalConstancia.setText("0.0");
+        this.txtTotalExhibicion.setText("0.0");
+        this.txtTotalFotocopias.setText("0.0");
+        this.txtTotalTramiteAdministrativo.setText("0.0");
+        this.txtTotalRegularizacionEscritura.setText("0.0"); 
+        this.txtTotalTramiteRegistrosPublicos.setText("0.0");
+        this.txtTotalAnotacionMarginal.setText("0.0");
+        this.txtTotalPeritaje.setText("0.0");
+        this.txtTotalOtros.setText("0.0");
+        
+        this.btnGuardar.setEnabled(false);
     }
 
     /**
@@ -796,13 +867,14 @@ public class dialogRecSolicitud extends javax.swing.JDialog {
                 btnReImprimirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnReImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
+        getContentPane().add(btnReImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 710, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
+        limpiar();
         activa();
         this.btnImprimir.setEnabled(false);
         try{
@@ -848,14 +920,14 @@ public class dialogRecSolicitud extends javax.swing.JDialog {
             float rpta = (float) (Math.rint(total*100)/100);
             this.txtTotalBusqueda.setText(rpta+"");
 
-            this.SumaTotal();
+            SumaTotal();
         }
         else{
 
             this.txtCantidadBusqueda.setText("");
             this.txtPrecioUnitarioBusqueda.setText("");
             this.txtTotalBusqueda.setText(0+"");
-            this.SumaTotal();
+            SumaTotal();
 
         }
 
@@ -903,6 +975,7 @@ public class dialogRecSolicitud extends javax.swing.JDialog {
 
             this.chkTestimonio.setSelected(true);
             this.txtCantidadTestimonio.requestFocus();
+            this.txtCantidadTestimonio.selectAll();
             try{
                 con.conectar();
                 ResultSet res=con.consulta("SELECT costo FROM tupa WHERE codTupa = 3;");
@@ -933,6 +1006,7 @@ public class dialogRecSolicitud extends javax.swing.JDialog {
 
             this.chkCopiaSimple.setSelected(true);
             this.txtCantidadCopiaSimple.requestFocus();
+            this.txtCantidadCopiaSimple.selectAll();
             try{
                 con.conectar();
                 ResultSet res=con.consulta("SELECT costo FROM tupa WHERE codTupa = 4;");
@@ -962,6 +1036,7 @@ public class dialogRecSolicitud extends javax.swing.JDialog {
 
             this.chkCopiaCertificada.setSelected(true);
             this.txtCantidadCopiaCertificada.requestFocus();
+            this.txtCantidadCopiaCertificada.selectAll();
             try{
                 con.conectar();
                 ResultSet res=con.consulta("SELECT costo FROM tupa WHERE codTupa = 6;");
@@ -1092,6 +1167,7 @@ public class dialogRecSolicitud extends javax.swing.JDialog {
 
             this.chkFotocopias.setSelected(true);
             this.txtCantidadFotocopias.requestFocus();
+            this.txtCantidadFotocopias.selectAll();
             try{
                 con.conectar();
                 ResultSet res=con.consulta("SELECT costo FROM tupa WHERE codTupa = 9;");
@@ -1470,9 +1546,14 @@ public class dialogRecSolicitud extends javax.swing.JDialog {
                 double resta = z-y;
 
                 float rpta = (float) (Math.rint(resta*10)/10);
+                
+                if(resta < 0){
+                    JOptionPane.showMessageDialog(rootPane, "Algo esta mal");
+                }else{
                 this.lbCambia.setText(rpta+"");
 
                 this.btnGuardar.setEnabled(true);
+                }
             }
 
         }else{
@@ -2000,6 +2081,8 @@ public class dialogRecSolicitud extends javax.swing.JDialog {
         // TODO add your handling code here:
         String numeroRecibo = this.lblNumeroRecibo.getText();
         jasper.ejecutarReporte(numeroRecibo);
+        
+        desactiva();
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void txtNumSolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumSolicitudActionPerformed
