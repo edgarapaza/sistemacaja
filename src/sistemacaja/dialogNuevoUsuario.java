@@ -12,11 +12,18 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
     public dialogNuevoUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
     }
-    public dialogNuevoUsuario(java.awt.Frame parent, boolean modal, String dni){
+    public dialogNuevoUsuario(java.awt.Frame parent, boolean modal, String dni, int combo){
         super(parent, modal);
         initComponents();
+        if(combo == 1){
+            this.Ocultar();
+        }else{
+            this.Mostrar();
+        }
         this.txtNumDoc.setText(dni);
+        this.cboxTipoDocum.setSelectedIndex(combo);
         this.txtApePat.requestFocus();
     }
     public void dbcbox(String sql,JComboBox a){
@@ -31,6 +38,24 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(rootPane, "Error" +e);
             }
         }
+   public void Ocultar(){
+       this.lblpaterno.setVisible(false);
+       this.lblmaterno.setVisible(false);
+       this.lblnombre.setText("Institucion");
+       this.txtApeMat.setText(".");
+       this.txtApePat.setText(".");
+       this.txtApeMat.setVisible(false);
+       this.txtApePat.setVisible(false);
+       this.txtNom.requestFocus();
+   }
+   public void Mostrar(){
+       this.lblpaterno.setVisible(true);
+       this.lblmaterno.setVisible(true);
+       this.lblnombre.setText("Nombre");
+       this.txtApeMat.setVisible(true);
+       this.txtApePat.setVisible(true);
+       this.txtApePat.requestFocus();
+   }
     public void nuevoRegistro(){
         int solic=0;
         try{
@@ -54,12 +79,12 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         txtNumDoc = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblmaterno = new javax.swing.JLabel();
         txtNom = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        lblnombre = new javax.swing.JLabel();
         txtApeMat = new javax.swing.JTextField();
         txtApePat = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        lblpaterno = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cboxTipoDocum = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
@@ -105,22 +130,22 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
 
         txtNumDoc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNumDoc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumDocKeyTyped(evt);
+            }
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNumDocKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNumDocKeyReleased(evt);
             }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNumDocKeyTyped(evt);
-            }
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("N° Documento:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setText("Apellido Materno:");
+        lblmaterno.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblmaterno.setText("Apellido Materno:");
 
         txtNom.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNom.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -129,8 +154,8 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setText("Nombres:");
+        lblnombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblnombre.setText("Nombres:");
 
         txtApeMat.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtApeMat.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -146,14 +171,14 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Apellido Paterno:");
+        lblpaterno.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblpaterno.setText("Apellido Paterno:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Tipo de Documento:");
 
         cboxTipoDocum.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cboxTipoDocum.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "D.N.I.", "L.M.", "PASAPORTE", " " }));
+        cboxTipoDocum.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "D.N.I.", "RUC.", "L.M.", "PASAPORTE", "" }));
         cboxTipoDocum.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cboxTipoDocumKeyPressed(evt);
@@ -170,23 +195,23 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNumDoc, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))
+                        .addComponent(txtNumDoc))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cboxTipoDocum, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(lblpaterno)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtApePat, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
+                        .addComponent(txtApePat))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                        .addComponent(lblmaterno)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtApeMat, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+                        .addComponent(txtApeMat))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(lblnombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNom, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)))
+                        .addComponent(txtNom)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -202,16 +227,16 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
                     .addComponent(txtNumDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
+                    .addComponent(lblpaterno)
                     .addComponent(txtApePat, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
+                    .addComponent(lblmaterno)
                     .addComponent(txtApeMat, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(txtNom, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE))
+                    .addComponent(lblnombre)
+                    .addComponent(txtNom))
                 .addContainerGap())
         );
 
@@ -352,20 +377,17 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel1)
                         .addGap(65, 65, 65)
                         .addComponent(lblUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(124, 124, 124)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(192, 192, 192)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -384,7 +406,7 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(656, 311));
+        setSize(new java.awt.Dimension(706, 311));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -396,17 +418,12 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
         }
 }//GEN-LAST:event_txtNumDocKeyPressed
     private void txtNumDocKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumDocKeyReleased
-        if(txtNumDoc.getText().length()>7){
+        if(txtNumDoc.getText().length()>20){
             txtApePat.requestFocus();
         }
 }//GEN-LAST:event_txtNumDocKeyReleased
     private void txtNumDocKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumDocKeyTyped
-        int n = (int)evt.getKeyChar();
-        if(n>=48 && n<=57 || n==13 || n==127){
-
-        }else{
-            evt.setKeyChar((char)KeyEvent.VK_CLEAR);
-        }
+        
 }//GEN-LAST:event_txtNumDocKeyTyped
     private void txtNomKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomKeyPressed
         if(KeyEvent.VK_ENTER == evt.getKeyCode()){
@@ -539,15 +556,15 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblUsu;
+    private javax.swing.JLabel lblmaterno;
+    private javax.swing.JLabel lblnombre;
+    private javax.swing.JLabel lblpaterno;
     private javax.swing.JTextField txtApeMat;
     private javax.swing.JTextField txtApePat;
     private javax.swing.JTextField txtDirec;

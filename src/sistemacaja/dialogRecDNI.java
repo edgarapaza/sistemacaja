@@ -19,6 +19,9 @@ public final class dialogRecDNI extends javax.swing.JDialog {
     int numeroRecibo =0, nextNumero=0;
     String costo;
     conexion con = new conexion();
+    
+    private int limite  = 11;
+    
     private printReciboDNI jasper;
     /**
      * Creates new form dialogRecDNI
@@ -751,7 +754,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
                 btnBuscarSolicitudActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscarSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(226, 11, -1, -1));
+        getContentPane().add(btnBuscarSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
         lbCambia.setBackground(new java.awt.Color(57, 9, 8));
         lbCambia.setFont(new java.awt.Font("Arial Black", 0, 60)); // NOI18N
@@ -817,14 +820,14 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             }
         });
         txtNunDNI.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNunDNIKeyTyped(evt);
+            }
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNunDNIKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNunDNIKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNunDNIKeyTyped(evt);
             }
         });
         getContentPane().add(txtNunDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 110, -1));
@@ -1486,30 +1489,75 @@ public final class dialogRecDNI extends javax.swing.JDialog {
     }//GEN-LAST:event_txtEfectivoKeyPressed
 
     private void btnBuscarSolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarSolicitudActionPerformed
-
+        
         int numero = txtNunDNI.getText().length();
+        
         String dni2 = null;
-        if (numero <8){
+        if (numero < 8)
+        {
             JOptionPane.showMessageDialog(rootPane, "Numero de Digitos de DNI Menor que 8 Numeros");
             this.txtNunDNI.requestFocus();
-        }else{
-            String dni=this.txtNunDNI.getText();
-            try{
-                con.conectar();
-               
-               
-                ResultSet rs=con.consulta("SELECT codUsu,CONCAT(nombre,' ',apePat,' ',apeMat) AS nombre FROM usuarios WHERE numDoc='"+dni+"' LIMIT 0,1;");
-                rs.next();
-                this.txtNombreUsuario.setText(rs.getString(2));
-                this.lblcodUsu.setText(rs.getString(1));
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(rootPane, "Usuario no encontrado","Administrador de Sistema",JOptionPane.INFORMATION_MESSAGE);
-                dni2 = this.txtNunDNI.getText();
-                dialogNuevoUsuario p=new dialogNuevoUsuario(null,false,dni2);
-                p.setVisible(true);
-            }
-
         }
+        else{
+            if(numero == 8){
+                String dni=this.txtNunDNI.getText();
+                try{
+                    con.conectar();
+
+                    ResultSet rs=con.consulta("SELECT codUsu,CONCAT(nombre,' ',apePat,' ',apeMat) AS nombre FROM usuarios WHERE numDoc='"+dni+"' LIMIT 0,1;");
+                    rs.next();
+                    this.txtNombreUsuario.setText(rs.getString(2));
+                    this.lblcodUsu.setText(rs.getString(1));
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(rootPane, "Usuario no encontrado","Administrador de Sistema",JOptionPane.INFORMATION_MESSAGE);
+                    dni2 = this.txtNunDNI.getText();
+                    dialogNuevoUsuario p=new dialogNuevoUsuario(null,false,dni2,0);
+                    p.setVisible(true);
+                }
+            }else{
+                if(numero > 8 && numero < 11){
+                    JOptionPane.showMessageDialog(null, "Numero de RUC Incompleto");
+                    this.txtNunDNI.setText("");
+                    this.txtNunDNI.requestFocus();
+                }else{
+           
+                    String ruc1=this.txtNunDNI.getText();
+                    try{
+                        con.conectar();
+
+                        ResultSet rs=con.consulta("SELECT codUsu, nombre FROM usuarios WHERE numDoc='"+ruc1+"' LIMIT 1;");
+                        rs.next();
+                        this.txtNombreUsuario.setText(rs.getString(2));
+                        this.lblcodUsu.setText(rs.getString(1));
+                    }catch(SQLException e){
+                        JOptionPane.showMessageDialog(rootPane, "RUC no encontrado","Administrador de Sistema",JOptionPane.INFORMATION_MESSAGE);
+                        //ruc = this.txtNunDNI.getText();
+                        dialogNuevoUsuario p=new dialogNuevoUsuario(null,false,ruc1,1);
+                        p.setVisible(true);
+                    }
+                }
+            }
+                
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
+        /*
+         Visualizacion por numero de RUC
+        */
+        
+        
+        
        
     }//GEN-LAST:event_btnBuscarSolicitudActionPerformed
 
@@ -2015,9 +2063,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNunDNIKeyPressed
 
     private void txtNunDNIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNunDNIKeyReleased
-        if(txtNunDNI.getText().length()>7){
-            btnBuscarSolicitud.doClick();
-        }
+        
     }//GEN-LAST:event_txtNunDNIKeyReleased
 
     private void txtNunDNIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNunDNIKeyTyped
@@ -2026,6 +2072,10 @@ public final class dialogRecDNI extends javax.swing.JDialog {
 
         }else{
             evt.setKeyChar((char)KeyEvent.VK_CLEAR);
+        }
+        
+        if(this.txtNunDNI.getText().length() == limite){
+            evt.consume();
         }
     }//GEN-LAST:event_txtNunDNIKeyTyped
 
