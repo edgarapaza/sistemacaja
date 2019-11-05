@@ -12,8 +12,7 @@ import java.util.logging.Logger;
  * @author Planificacion1
  */
 public class frmMenu extends javax.swing.JFrame {
-    
-    
+
     conexion con = new conexion();
     
     /**
