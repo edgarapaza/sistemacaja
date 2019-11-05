@@ -24,14 +24,14 @@ public class PrintRecibo
         {
         
             Class.forName("com.mysql.jdbc.Driver"); //se carga el driver
-            conn= DriverManager.getConnection("jdbc:mysql://192.168.1.100:3306/recepcion","usuario","archivo123");
+            conn= DriverManager.getConnection("jdbc:mysql://192.168.0.73/recepcion","usuario","archivo123$");
             //JOptionPane.showMessageDialog(null,"Conexión establecida");
         }
         catch (ClassNotFoundException | SQLException ex)
         {
             System.out.println(ex);
         }
-    }
+   }
     
     public void ejecutarReporte(String numeroRecibo){
     
@@ -39,11 +39,10 @@ public class PrintRecibo
     {                     
         File f = new File (""); // Creamos un objeto file
 	//JOptionPane.showMessageDialog(null,f.getAbsolutePath()); // Llamamos al método que devuelve la ruta absoluta
-        String archivo = f.getAbsolutePath() + "\\report\\reporteSolicitud.jasper";
-        
-        //JOptionPane.showMessageDialog(null, archivo);
-        //String archivo = "/home/edgar/NetBeansProjects/SistemaSolicitudes/src/sistemasolicitudes/reportEscritura.jasper";
-        //String archivo = "C:/Users/Jhonnel/Documents/NetBeansProjects/sistemacaja2/src/sistemacaja/reporteSolicitud.jasper";
+        String archivo = f.getAbsolutePath() + "\\report\\recibosSol.jasper";
+     
+        //**String archivo = "/home/edgar/NetBeansProjects/SistemaSolicitudes/src/sistemasolicitudes/reportEscritura.jasper";
+        //String archivo = "C:\\Users\\INFORMATICA\\Documents\\NetBeansProjects\\sistemacaja\\src\\sistemacaja\\recibosSol.jasper";
         
         System.out.println("Cargando desde: " + archivo);
         if(archivo == null){

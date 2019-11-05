@@ -15,7 +15,7 @@ public class frmMenu extends javax.swing.JFrame {
     
     
     conexion con = new conexion();
-    private PrintReportDiario jasper;
+    
     /**
      * Creates new form frmRecibos
      */
@@ -89,9 +89,7 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void btnReciboSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReciboSolicitudesActionPerformed
         dialogRecSolicitud solic = new dialogRecSolicitud(this, false);
-        solic.setVisible(true);
-        
-        
+        solic.setVisible(true); 
     }//GEN-LAST:event_btnReciboSolicitudesActionPerformed
 
     private void btnRecivosDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecivosDNIActionPerformed
@@ -104,7 +102,7 @@ public class frmMenu extends javax.swing.JFrame {
             // TODO add your handling code here:
             ///String fecha = JOptionPane.showInputDialog(rootPane, "Ingrese Fecha (Año-Mes-dia)");
             //jasper.ejecutarReporte(fecha);
-            Desktop.getDesktop().browse(new URI("http://192.168.1.100/reportesDiarios"));
+            Desktop.getDesktop().browse(new URI("http://192.168.1.12/reportesDiarios"));
         } catch (IOException | URISyntaxException ex) {
             Logger.getLogger(frmMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -112,7 +110,8 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void btnAnularReciboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularReciboActionPerformed
         // TODO add your handling code here:
-        
+        frmAnular anular = new frmAnular(this, false);
+        anular.setVisible(true);
     }//GEN-LAST:event_btnAnularReciboActionPerformed
 
     /**

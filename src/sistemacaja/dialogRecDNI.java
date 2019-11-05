@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package sistemacaja;
 
 import java.awt.Color;
@@ -15,11 +9,14 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public final class dialogRecDNI extends javax.swing.JDialog {
+    
+    
+    ConvertirNumeros convertir = new ConvertirNumeros();
     int solic, esc;
-    int numeroRecibo =0, nextNumero=0;
+    int numeroReciboDni =0, nextNumero=0;
     String costo;
     conexion con = new conexion();
-    private printReciboDNI jasper;
+    private PrintReciboDNI jasper;
     /**
      * Creates new form dialogRecDNI
      */
@@ -27,18 +24,20 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        jasper=new printReciboDNI();
+        jasper=new PrintReciboDNI();
         
         this.lblcodUsu.setVisible(true);
         desactiva();
     }
 
-        public double HallarTotal(int cantidad, double precio)
+    public double HallarTotal(int cantidad, double precio)
     {
         Double total = cantidad * precio;
         return total;
     }
-         public void SumaTotal()
+    
+    
+    public void SumaTotal()
     {
         double a = Double.parseDouble(this.txtTotalBusqueda.getText());
         double b = Double.parseDouble(this.txtTotalCalificacion.getText());
@@ -57,7 +56,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         double o = Double.parseDouble(this.txtTotalOtros.getText());
         
         double suma = a+b+c+d+e+f+g+h+i+j+k+l+m+n+o;
-        float rpta = (float) (Math.rint(suma*10)/10);
+        float rpta = (float) (Math.rint(suma*100)/100);
         this.txtTotal.setText(rpta+"");
     }
     
@@ -88,11 +87,12 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         this.btnBuscarSolicitud.setEnabled(false);
         this.btnGuardar.setEnabled(false);
         this.btnImprimir.setEnabled(false);
-        }
-    public void activa(){
-           
-           
-           this.txtNunDNI.setEnabled(true);
+    }
+    
+    
+    public void activa()
+    {
+        this.txtNunDNI.setEnabled(true);
         this.txtNombreUsuario.setEnabled(true);
         
         this.chkBusqueda.setEnabled(true);
@@ -116,8 +116,11 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         
         this.btnBuscarSolicitud.setEnabled(true);
         this.btnImprimir.setEnabled(true);
-        }
-    public void limpiar(){
+    }
+
+    
+    public void limpiar()
+    {
         this.txtNunDNI.setText("");
         this.txtNombreUsuario.setText("");
         this.txtOtros.setText("");
@@ -144,10 +147,10 @@ public final class dialogRecDNI extends javax.swing.JDialog {
 
         this.txtCantidadBusqueda.setText("0");
         this.txtCantidadCalificacion.setText("0");
-        this.txtCantidadTestimonio.setText("0");
-        this.txtCantidadCopiaSimple.setText("0");
-        this.txtCantidadCopiaCertificada.setText("0");
-        this.txtCantidadCCPartidas.setText("0");
+        this.txtCantidadTestimonio.setText("");
+        this.txtCantidadCopiaSimple.setText("");
+        this.txtCantidadCopiaCertificada.setText("");
+        this.txtCantidadCCPartidas.setText("");
         this.txtCantidadConstancia.setText("0");
         this.txtCantidadExhibicion.setText("0");
         this.txtCantidadFotocopias.setText("0");
@@ -157,8 +160,12 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         this.txtCantidadAnotacionMarginal.setText("0");
         this.txtCantidadPeritaje.setText("0");
         this.txtCantidadOtros.setText("0");
+        this.txtFojasTestimonio.setText("0");
+        this.txtFojasCopiaSimple.setText("0");
+        this.txtFojasCopiaCertificada.setText("0");
+        this.txtFojasCCPartidas.setText("0");
         
-                this.txtPrecioUnitarioBusqueda.setText("0.0");
+        this.txtPrecioUnitarioBusqueda.setText("0.0");
         this.txtPrecioUnitarioCalificacion.setText("0.0");
         this.txtPrecioUnitarioTestimonio.setText("0.0");
         this.txtPrecioUnitarioCopiaSimple.setText("0.0");
@@ -286,6 +293,10 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnReImprimir = new javax.swing.JButton();
+        txtFojasTestimonio = new javax.swing.JTextField();
+        txtFojasCopiaSimple = new javax.swing.JTextField();
+        txtFojasCopiaCertificada = new javax.swing.JTextField();
+        txtFojasCCPartidas = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -432,7 +443,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         getContentPane().add(chkFotocopias, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
 
         chkTramiteAdministrativo.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        chkTramiteAdministrativo.setText("TRAMITE ADMINISTRATIVO");
+        chkTramiteAdministrativo.setText("TRANSCRIPCION MECANOGRAFICA");
         chkTramiteAdministrativo.setIconTextGap(30);
         chkTramiteAdministrativo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -513,7 +524,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
                 txtCantidadTestimonioKeyPressed(evt);
             }
         });
-        getContentPane().add(txtCantidadTestimonio, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 182, 30, -1));
+        getContentPane().add(txtCantidadTestimonio, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 182, 30, -1));
 
         txtCantidadCopiaSimple.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         txtCantidadCopiaSimple.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -521,7 +532,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
                 txtCantidadCopiaSimpleKeyPressed(evt);
             }
         });
-        getContentPane().add(txtCantidadCopiaSimple, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 208, 30, -1));
+        getContentPane().add(txtCantidadCopiaSimple, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 208, 30, -1));
 
         txtPrecioUnitarioBusqueda.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(txtPrecioUnitarioBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, 59, -1));
@@ -536,7 +547,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
                 txtCantidadCopiaCertificadaKeyPressed(evt);
             }
         });
-        getContentPane().add(txtCantidadCopiaCertificada, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 234, 30, -1));
+        getContentPane().add(txtCantidadCopiaCertificada, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 234, 30, -1));
 
         txtCantidadCCPartidas.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         txtCantidadCCPartidas.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -544,7 +555,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
                 txtCantidadCCPartidasKeyPressed(evt);
             }
         });
-        getContentPane().add(txtCantidadCCPartidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, 30, -1));
+        getContentPane().add(txtCantidadCCPartidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 30, -1));
 
         txtCantidadConstancia.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         txtCantidadConstancia.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -841,7 +852,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 640, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 660, 100, -1));
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -858,6 +869,38 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnReImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 690, -1, -1));
+
+        txtFojasTestimonio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        txtFojasTestimonio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFojasTestimonioKeyPressed(evt);
+            }
+        });
+        getContentPane().add(txtFojasTestimonio, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 182, 30, -1));
+
+        txtFojasCopiaSimple.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        txtFojasCopiaSimple.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFojasCopiaSimpleKeyPressed(evt);
+            }
+        });
+        getContentPane().add(txtFojasCopiaSimple, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 208, 30, -1));
+
+        txtFojasCopiaCertificada.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        txtFojasCopiaCertificada.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFojasCopiaCertificadaKeyPressed(evt);
+            }
+        });
+        getContentPane().add(txtFojasCopiaCertificada, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 234, 30, -1));
+
+        txtFojasCCPartidas.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        txtFojasCCPartidas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFojasCCPartidasKeyPressed(evt);
+            }
+        });
+        getContentPane().add(txtFojasCCPartidas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, 30, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -918,6 +961,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null,e + "mal2");
             }
+            
             this.txtPrecioUnitarioCalificacion.setText(costo);
             int cantidad = Integer.parseInt(this.txtCantidadCalificacion.getText());
             double precio = Double.parseDouble(this.txtPrecioUnitarioCalificacion.getText());
@@ -944,7 +988,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
 
             this.chkTestimonio.setSelected(true);
             this.txtCantidadTestimonio.requestFocus();
-            this.txtCantidadTestimonio.selectAll();
+            this.txtFojasTestimonio.selectAll();
             try{
                 con.conectar();
                 ResultSet res=con.consulta("SELECT costo FROM tupa WHERE codTupa = 3;");
@@ -960,7 +1004,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         }
         else{
 
-            this.txtCantidadTestimonio.setText("");
+            this.txtFojasTestimonio.setText("");
             this.txtPrecioUnitarioTestimonio.setText("");
             this.txtTotalTestimonio.setText(0+"");
             this.SumaTotal();
@@ -975,7 +1019,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
 
             this.chkCopiaSimple.setSelected(true);
             this.txtCantidadCopiaSimple.requestFocus();
-            this.txtCantidadCopiaSimple.selectAll();
+            this.txtFojasCopiaSimple.selectAll();
             try{
                 con.conectar();
                 ResultSet res=con.consulta("SELECT costo FROM tupa WHERE codTupa = 4;");
@@ -991,7 +1035,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         }
         else{
 
-            this.txtCantidadCopiaSimple.setText("");
+            this.txtFojasCopiaSimple.setText("");
             this.txtPrecioUnitarioCopiaSimple.setText("");
             this.txtTotalCopiaSimple.setText(0+"");
             this.SumaTotal();
@@ -1005,7 +1049,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
 
             this.chkCopiaCertificada.setSelected(true);
             this.txtCantidadCopiaCertificada.requestFocus();
-            this.txtCantidadCopiaCertificada.selectAll();
+            this.txtFojasCopiaCertificada.selectAll();
             try{
                 con.conectar();
                 ResultSet res=con.consulta("SELECT costo FROM tupa WHERE codTupa = 6;");
@@ -1021,7 +1065,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         }
         else{
 
-            this.txtCantidadCopiaCertificada.setText("");
+            this.txtFojasCopiaCertificada.setText("");
             this.txtPrecioUnitarioCopiaCertificada.setText("");
             this.txtTotalCopiaCertificada.setText(0+"");
             this.SumaTotal();
@@ -1033,7 +1077,8 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         {
 
             this.chkCCPartidas.setSelected(true);
-            this.txtCantidadCCPartidas.setText(1+"");
+            this.txtCantidadCCPartidas.requestFocus();
+            this.txtFojasCCPartidas.setText(1+"");
             try{
                 con.conectar();
                 ResultSet res=con.consulta("SELECT costo FROM tupa WHERE codTupa = 16;");
@@ -1044,7 +1089,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null,e + "mal2");
             }
             this.txtPrecioUnitarioCCPartidas.setText(costo);
-            int cantidad = Integer.parseInt(this.txtCantidadCCPartidas.getText());
+            int cantidad = Integer.parseInt(this.txtFojasCCPartidas.getText());
             double precio = Double.parseDouble(this.txtPrecioUnitarioCCPartidas.getText());
 
             double total = this.HallarTotal(cantidad, precio);
@@ -1055,7 +1100,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         }
         else{
 
-            this.txtCantidadCCPartidas.setText("");
+            this.txtFojasCCPartidas.setText("");
             this.txtPrecioUnitarioCCPartidas.setText("");
             this.txtTotalCCPartidas.setText(0+"");
             this.SumaTotal();
@@ -1347,43 +1392,27 @@ public final class dialogRecDNI extends javax.swing.JDialog {
     }//GEN-LAST:event_txtCantidadBusquedaKeyPressed
 
     private void txtCantidadTestimonioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadTestimonioKeyPressed
-        int cantidad = Integer.parseInt(this.txtCantidadTestimonio.getText());
-        double precio = Double.parseDouble(this.txtPrecioUnitarioTestimonio.getText());
-
-        double total = this.HallarTotal(cantidad, precio);
-        float rpta = (float)(Math.rint(total*100)/100);
-        this.txtTotalTestimonio.setText(rpta+"");
-        this.SumaTotal();
+        if(KeyEvent.VK_ENTER == evt.getKeyCode()){
+            this.txtFojasTestimonio.requestFocus();
+        } 
     }//GEN-LAST:event_txtCantidadTestimonioKeyPressed
 
     private void txtCantidadCopiaSimpleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadCopiaSimpleKeyPressed
-        int cantidad = Integer.parseInt(this.txtCantidadCopiaSimple.getText());
-        double precio = Double.parseDouble(this.txtPrecioUnitarioCopiaSimple.getText());
-
-        double total = this.HallarTotal(cantidad, precio);
-        float rpta = (float) (Math.rint(total*100)/100);
-        this.txtTotalCopiaSimple.setText(rpta+"");
-        this.SumaTotal();
+         if(KeyEvent.VK_ENTER == evt.getKeyCode()){
+            this.txtFojasCopiaSimple.requestFocus();
+        }
     }//GEN-LAST:event_txtCantidadCopiaSimpleKeyPressed
 
     private void txtCantidadCopiaCertificadaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadCopiaCertificadaKeyPressed
-        int cantidad = Integer.parseInt(this.txtCantidadCopiaCertificada.getText());
-        double precio = Double.parseDouble(this.txtPrecioUnitarioCopiaCertificada.getText());
-
-        double total = this.HallarTotal(cantidad, precio);
-        float rpta = (float) (Math.rint(total*100)/100);
-        this.txtTotalCopiaCertificada.setText(rpta+"");
-        this.SumaTotal();
+            if(KeyEvent.VK_ENTER == evt.getKeyCode()){
+            this.txtFojasCopiaCertificada.requestFocus();
+        }
     }//GEN-LAST:event_txtCantidadCopiaCertificadaKeyPressed
 
     private void txtCantidadCCPartidasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadCCPartidasKeyPressed
-        int cantidad = Integer.parseInt(this.txtCantidadCCPartidas.getText());
-        double precio = Double.parseDouble(this.txtPrecioUnitarioCCPartidas.getText());
-
-        double total = this.HallarTotal(cantidad, precio);
-        float rpta = (float) (Math.rint(total*100)/100);
-        this.txtTotalCCPartidas.setText(rpta+"");
-        this.SumaTotal();
+         if(KeyEvent.VK_ENTER == evt.getKeyCode()){
+            this.txtFojasCCPartidas.requestFocus();
+        }
     }//GEN-LAST:event_txtCantidadCCPartidasKeyPressed
 
     private void txtCantidadConstanciaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadConstanciaKeyPressed
@@ -1529,7 +1558,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null,e + "mal2");
             }
             this.txtPrecioUnitarioPeritaje.setText(costo);
-             int cantidad = Integer.parseInt(this.txtCantidadPeritaje.getText());
+            int cantidad = Integer.parseInt(this.txtCantidadPeritaje.getText());
             double precio = Double.parseDouble(this.txtPrecioUnitarioPeritaje.getText());
 
             double total = this.HallarTotal(cantidad, precio);
@@ -1575,20 +1604,18 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         *  guarde en la tabla "detallerecibo".
         ********************************************************************************************
         */
-        int last_cod =0;
-        String numerodni = this.txtNunDNI.getText();
         
+        String numerodni = this.txtNunDNI.getText();
+        String totalcadena = this.txtTotal.getText();
         double total = Double.parseDouble(this.txtTotal.getText());
+        String letras = convertir.Convertir(totalcadena, true);
+        
         int codPersonal =  1101;
         String codUsuario = this.lblcodUsu.getText();
         try{
             con.conectar();
             //Conectarse a la Base de Datos y ejecutar los SQL
-            con.insertar("INSERT INTO recibo (numRec,numSol,total,fecha,hora,anulado,codPer,codUsu,numDNI) VALUES (null,0,"+total+",now(),now(),0,"+codPersonal+","+codUsuario+","+numerodni+");");
-
-            ResultSet res1=con.consulta("select numRec from recibo order by numRec desc limit 0,1;");
-            res1.next();
-            last_cod = Integer.parseInt(res1.getString(1));
+            con.insertar("INSERT INTO recibo (numRec, numSol, total,fecha,hora,anulado,codPer,codUsu,numDNI,totalletras) VALUES ("+nextNumero+",'0',"+total+",now(),now(),0,"+codPersonal+","+codUsuario+",'"+numerodni+"','"+letras+"');");
 
             con.cierraConexion();
         }
@@ -1620,7 +1647,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }catch(SQLException ex){
                 Logger.getLogger(dialogRecDNI.class.getName()).log(Level.SEVERE,null, ex);
@@ -1645,7 +1672,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(SQLException e)
@@ -1672,7 +1699,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(SQLException e)
@@ -1700,7 +1727,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(SQLException e)
@@ -1728,7 +1755,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(SQLException e)
@@ -1756,7 +1783,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(SQLException e)
@@ -1784,7 +1811,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(SQLException e)
@@ -1812,7 +1839,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(SQLException e)
@@ -1828,7 +1855,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         }
         if (this.chkFotocopias.isSelected())
         {
-            JOptionPane.showMessageDialog(rootPane, "Fotocopia");
+            //JOptionPane.showMessageDialog(rootPane, "Fotocopia");
             // Declarando variables y capturando valores de cada line en el recibo
             String concepto = this.chkFotocopias.getText();
             double cantidad = Double.parseDouble(this.txtCantidadFotocopias.getText());
@@ -1841,7 +1868,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(SQLException e)
@@ -1857,7 +1884,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         }
         if (this.chkTramiteAdministrativo.isSelected())
         {
-            JOptionPane.showMessageDialog(rootPane, "Tramite Administrativo");
+            //JOptionPane.showMessageDialog(rootPane, "Tramite Administrativo");
             // Declarando variables y capturando valores de cada line en el recibo
             String concepto = this.chkTramiteAdministrativo.getText();
             double cantidad = Double.parseDouble(this.txtCantidadTramiteAdministrativo.getText());
@@ -1870,7 +1897,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(Exception e)
@@ -1886,7 +1913,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         }
         if (this.chkRegularizacionEscritura.isSelected())
         {
-            JOptionPane.showMessageDialog(rootPane, "Regularizacion de Escrituras");
+            //JOptionPane.showMessageDialog(rootPane, "Regularizacion de Escrituras");
             // Declarando variables y capturando valores de cada line en el recibo
             String concepto = this.chkRegularizacionEscritura.getText();
             double cantidad = Double.parseDouble(this.txtCantidadRegularizacionEscritura.getText());
@@ -1899,7 +1926,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(Exception e)
@@ -1915,7 +1942,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         }
         if (this.chkTramiteRegistrosPublicos.isSelected())
         {
-            JOptionPane.showMessageDialog(rootPane, "Tramite ");
+            //JOptionPane.showMessageDialog(rootPane, "Tramite ");
             // Declarando variables y capturando valores de cada line en el recibo
             String concepto = this.chkTramiteRegistrosPublicos.getText();
             double cantidad = Double.parseDouble(this.txtCantidadTramiteRegistrosPublicos.getText());
@@ -1928,7 +1955,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(Exception e)
@@ -1944,7 +1971,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         }
         if (this.chkAnotacionMarginal.isSelected())
         {
-            JOptionPane.showMessageDialog(rootPane, "activo");
+            //JOptionPane.showMessageDialog(rootPane, "activo");
             // Declarando variables y capturando valores de cada line en el recibo
             String concepto = this.chkAnotacionMarginal.getText();
             double cantidad = Double.parseDouble(this.txtCantidadAnotacionMarginal.getText());
@@ -1957,7 +1984,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(SQLException e)
@@ -1973,7 +2000,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         }
         if (this.chkOtros.isSelected())
         {
-            JOptionPane.showMessageDialog(rootPane, "activo");
+            //JOptionPane.showMessageDialog(rootPane, "activo");
             // Declarando variables y capturando valores de cada line en el recibo
             String concepto = this.txtOtros.getText();
             double cantidad = Double.parseDouble(this.txtCantidadOtros.getText());
@@ -1986,7 +2013,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
             try{
                 con.conectar();
                 //Conectarse a la Base de Datos y ejecutar los SQL
-                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+last_cod+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
+                con.insertar("INSERT INTO recepcion.detallerecibo (codDetRec,numRecibo,concepto,cantidad,pUnitario,subtotal,fecha) VALUES (null,"+nextNumero+",'"+concepto+"',"+cantidad+","+precio+","+subtotal+",now());");
                 con.cierraConexion();
             }
             catch(SQLException e)
@@ -2015,7 +2042,7 @@ public final class dialogRecDNI extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNunDNIKeyPressed
 
     private void txtNunDNIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNunDNIKeyReleased
-        if(txtNunDNI.getText().length()>7){
+        if(txtNunDNI.getText().length()>10){
             btnBuscarSolicitud.doClick();
         }
     }//GEN-LAST:event_txtNunDNIKeyReleased
@@ -2041,17 +2068,18 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         this.btnImprimir.setEnabled(false);
         try{
             con.conectar();
-            ResultSet res=con.consulta("SELECT max(numRec) FROM recibo;");
+            ResultSet res=con.consulta("SELECT numRec FROM recibo ORDER BY numRec DESC LIMIT 0,1");
             res.next();
-            numeroRecibo=Integer.parseInt(res.getString(1));
+            numeroReciboDni= res.getInt("numRec");
 
             con.cierraConexion();
         }catch(SQLException e){
             JOptionPane.showMessageDialog(rootPane, e);
         }
-        nextNumero = numeroRecibo + 1;
+        nextNumero = numeroReciboDni + 1;
         this.lblNumeroRecibo.setText(nextNumero+"");
         this.txtNunDNI.requestFocus();
+        
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void txtEfectivoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEfectivoKeyTyped
@@ -2074,9 +2102,10 @@ public final class dialogRecDNI extends javax.swing.JDialog {
                 z = Double.parseDouble(this.txtEfectivo.getText());
                 double y;
                 y = Double.parseDouble(this.txtTotal.getText());
-                double resta = z-y;
+                float y_valor = (float)(Math.rint(y*100)/100);
+                double resta = z-y_valor;
 
-                float rpta = (float) (Math.rint(resta*10)/10);
+                float rpta = (float) (Math.rint(resta*100)/100);
                 
                 if(resta < 0){
                     JOptionPane.showMessageDialog(rootPane, "Algo esta mal");
@@ -2109,6 +2138,46 @@ public final class dialogRecDNI extends javax.swing.JDialog {
         String numeroRecibo = JOptionPane.showInputDialog("Escriba el Numero de Solicitud");
         jasper.ejecutarReporte(numeroRecibo);
     }//GEN-LAST:event_btnReImprimirActionPerformed
+
+    private void txtFojasTestimonioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFojasTestimonioKeyPressed
+       int cantidad = Integer.parseInt(this.txtFojasTestimonio.getText());
+        double precio = Double.parseDouble(this.txtPrecioUnitarioTestimonio.getText());
+
+        double total = this.HallarTotal(cantidad, precio);
+        float rpta = (float) (Math.rint(total*100)/100);
+        this.txtTotalTestimonio.setText(rpta+"");
+        this.SumaTotal();
+    }//GEN-LAST:event_txtFojasTestimonioKeyPressed
+
+    private void txtFojasCopiaSimpleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFojasCopiaSimpleKeyPressed
+        int cantidad = Integer.parseInt(this.txtFojasCopiaSimple.getText());
+        double precio = Double.parseDouble(this.txtPrecioUnitarioCopiaSimple.getText());
+
+        double total = this.HallarTotal(cantidad, precio);
+        float rpta = (float) (Math.rint(total*100)/100);
+        this.txtTotalCopiaSimple.setText(rpta+"");
+        this.SumaTotal();
+    }//GEN-LAST:event_txtFojasCopiaSimpleKeyPressed
+
+    private void txtFojasCopiaCertificadaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFojasCopiaCertificadaKeyPressed
+        int cantidad = Integer.parseInt(this.txtFojasCopiaCertificada.getText());
+        double precio = Double.parseDouble(this.txtPrecioUnitarioCopiaCertificada.getText());
+
+        double total = this.HallarTotal(cantidad, precio);
+        float rpta = (float) (Math.rint(total*100)/100);
+        this.txtTotalCopiaCertificada.setText(rpta+"");
+        this.SumaTotal();
+    }//GEN-LAST:event_txtFojasCopiaCertificadaKeyPressed
+
+    private void txtFojasCCPartidasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFojasCCPartidasKeyPressed
+        int cantidad = Integer.parseInt(this.txtFojasCCPartidas.getText());
+        double precio = Double.parseDouble(this.txtPrecioUnitarioCCPartidas.getText());
+
+        double total = this.HallarTotal(cantidad, precio);
+        float rpta = (float) (Math.rint(total*100)/100);
+        this.txtTotalCCPartidas.setText(rpta+"");
+        this.SumaTotal();
+    }//GEN-LAST:event_txtFojasCCPartidasKeyPressed
 
     /**
      * @param args the command line arguments
@@ -2204,6 +2273,10 @@ public final class dialogRecDNI extends javax.swing.JDialog {
     private javax.swing.JTextField txtCantidadTramiteAdministrativo;
     private javax.swing.JTextField txtCantidadTramiteRegistrosPublicos;
     private javax.swing.JTextField txtEfectivo;
+    private javax.swing.JTextField txtFojasCCPartidas;
+    private javax.swing.JTextField txtFojasCopiaCertificada;
+    private javax.swing.JTextField txtFojasCopiaSimple;
+    private javax.swing.JTextField txtFojasTestimonio;
     private javax.swing.JTextField txtNombreUsuario;
     private javax.swing.JTextField txtNunDNI;
     private javax.swing.JTextField txtOtros;

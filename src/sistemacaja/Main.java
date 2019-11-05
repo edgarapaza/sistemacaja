@@ -21,7 +21,7 @@ public class Main {
         ImageIcon imagen = new ImageIcon("C:\\sistemacaja\\img\\introarp.jpg");
         
         JLabel label1 = new JLabel(imagen);
-        dialog.setBounds(400, 200, 600, 454);
+        dialog.setBounds(400, 200, 600, 454);   
         dialog.add(label1);
         
         Timer timer = new Timer(3000, new ActionListener() {

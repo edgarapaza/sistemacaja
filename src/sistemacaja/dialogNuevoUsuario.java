@@ -488,7 +488,7 @@ public class dialogNuevoUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGuardarActionPerformed
     private void cboxProvItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboxProvItemStateChanged
         String provi = String.valueOf(cboxProv.getSelectedItem());
-        String valor="";
+        String valor= null;
         cboxDist.removeAllItems();
         try{
             con.conectar();

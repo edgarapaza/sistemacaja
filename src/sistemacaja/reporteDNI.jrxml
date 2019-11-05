@@ -3,16 +3,17 @@
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<subDataset name="conection" uuid="dff81bf9-70a3-43dd-adcf-9c11a5efd7ad">
+	<subDataset name="recepcion" uuid="4054c5f6-a007-4def-b01c-b8f6aae0d92d">
 		<queryString language="SQL">
 			<![CDATA[select 
 r.numRec, r.total,r.fecha,
 d.concepto, d.subtotal, d.cantidad, d.pUnitario,
-u.numDoc, concat(u.nombre,' ', u.apePat,' ', u.apeMat) as nombre
+u.numDoc, concat(u.nombre,' ', u.apePat,' ', u.apeMat) as nombre,
+r.totalletras
 from detallerecibo as d, usuarios as u, recibo as r
 where r.numRec = d.numRecibo and
       r.codUsu = u.codUsu and
-      r.numRec = 53;]]>
+      r.numRec = 20347;]]>
 		</queryString>
 		<field name="numRec" class="java.lang.Integer">
 			<fieldDescription><![CDATA[]]></fieldDescription>
@@ -41,19 +42,23 @@ where r.numRec = d.numRecibo and
 		<field name="nombre" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
+		<field name="totalletras" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
 	</subDataset>
-	<parameter name="numerorecibo" class="java.lang.String">
+	<parameter name="numeroRecibo" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select 
 r.numRec, r.total,r.fecha,
 d.concepto, d.subtotal, d.cantidad, d.pUnitario,
-u.numDoc, concat(u.nombre,' ', u.apePat,' ', u.apeMat) as nombre
+u.numDoc, concat(u.nombre,' ', u.apePat,' ', u.apeMat) as nombre,
+r.totalletras
 from detallerecibo as d, usuarios as u, recibo as r
 where r.numRec = d.numRecibo and
       r.codUsu = u.codUsu and
-      r.numRec = $P{numerorecibo};]]>
+      r.numRec = $P{numeroRecibo};]]>
 	</queryString>
 	<field name="numRec" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -82,25 +87,35 @@ where r.numRec = d.numRecibo and
 	<field name="nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="totalletras" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="153" splitType="Stretch">
+		<band height="148" splitType="Stretch">
 			<textField>
-				<reportElement x="53" y="109" width="165" height="20" uuid="5e7f1a70-9fa6-4dee-b7e4-760bdefde46c"/>
+				<reportElement x="34" y="113" width="237" height="20" uuid="5e7f1a70-9fa6-4dee-b7e4-760bdefde46c"/>
 				<textElement>
-					<font fontName="Serif" size="10" isBold="false"/>
+					<font fontName="Arial" size="10" isBold="false"/>
 					<paragraph firstLineIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="100" y="81" width="78" height="20" uuid="8175484d-434b-492b-9f94-628da8fd9086"/>
+				<reportElement x="38" y="83" width="97" height="20" uuid="8175484d-434b-492b-9f94-628da8fd9086"/>
 				<textElement>
-					<font fontName="Serif" size="12" isBold="false"/>
+					<font fontName="Arial" size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{numDoc}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{numDoc}+ " - "]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement x="135" y="83" width="48" height="20" uuid="41f8b237-26de-4201-a753-01c0367f0534"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -111,25 +126,34 @@ where r.numRec = d.numRecibo and
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="14" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="98" y="0" width="77" height="13" uuid="ce079876-b920-4846-8e7b-b2c62f068842"/>
-				<textFieldExpression><![CDATA[$F{concepto}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="172" y="0" width="27" height="13" uuid="e5dd6737-e1cf-433d-832f-676c20cdb8db"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="190" y="1" width="27" height="13" uuid="e5dd6737-e1cf-433d-832f-676c20cdb8db"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{pUnitario}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="208" y="0" width="52" height="13" uuid="0d201ee0-8ef0-4cea-a77b-25a3c43918c8"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="220" y="1" width="35" height="13" uuid="0d201ee0-8ef0-4cea-a77b-25a3c43918c8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="3" y="0" width="28" height="13" uuid="9d9c4eab-2428-41d5-a5b1-4ad46932a138"/>
-				<textElement textAlignment="Center"/>
+				<reportElement x="19" y="1" width="19" height="13" uuid="9d9c4eab-2428-41d5-a5b1-4ad46932a138"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="1" width="136" height="13" uuid="ce079876-b920-4846-8e7b-b2c62f068842"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{concepto}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -137,17 +161,24 @@ where r.numRec = d.numRecibo and
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="70" splitType="Stretch">
+		<band height="75" splitType="Stretch">
 			<textField>
-				<reportElement x="35" y="56" width="100" height="13" uuid="bb0aa4c6-4936-47cc-a5bd-4b2a51476eb9"/>
+				<reportElement x="15" y="56" width="100" height="13" uuid="bb0aa4c6-4936-47cc-a5bd-4b2a51476eb9"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="199" y="9" width="45" height="20" uuid="1640ac5e-ec57-4aac-a6c7-9c45a0f0c2fc"/>
+				<reportElement x="206" y="-1" width="52" height="19" uuid="1640ac5e-ec57-4aac-a6c7-9c45a0f0c2fc"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="31" y="17" width="249" height="30" uuid="98e2ed28-1dfc-46f5-9ed6-5e01a13b3613"/>
+				<textFieldExpression><![CDATA[$F{totalletras}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

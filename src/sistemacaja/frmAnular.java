@@ -171,6 +171,7 @@ public class frmAnular extends javax.swing.JDialog {
             {
                 con.conectar();
                 con.insertar("INSERT INTO anular (codAnu, fecha, asunto, codRub,  codRec,codPer) VALUES (null, now(), '"+motivo+"', 0, "+numeroRecibo+", 1101);");
+                con.insertar("UPDATE `recepcion`.`recibo` SET `total`='0', `anulado`='1', `totalletras`='NULL' WHERE `numRec`='"+numeroRecibo+"';");
                 con.cierraConexion();
                 JOptionPane.showMessageDialog(rootPane, "Recibo anulado con Exito");
                 dispose();
